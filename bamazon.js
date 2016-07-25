@@ -103,19 +103,15 @@ function quantity(choice,res) {
   message:'How Many would you like?'
   }]).then(function(val) {
   
-
     ai = choice - 1;
     stock = res[ai].StockQuantity;
     amount = val.amount;
 
-
-    console.log('q ='+q);
-    console.log('length'+q.length)
-
-      if (amount < stock){
+      if (amount <= stock){
         dbUpdate(choice, amount, stock);
       }else{
-        console.log('That amount is not available order up to'+ ' '+ stock +'?')
+        console.log('That amount is not available, order up to'+ ' '+ stock +'?')
+        quantity(choice,res);
       }          
   });                  
 };
@@ -132,7 +128,7 @@ function dbUpdate(choice, amount, stock){
     console.log("----------------------------------------------------------");
     }); 
 
-     
+  
 
     connection.query('SELECT * FROM products', function(err, res) {
     if (err) throw err;
@@ -173,24 +169,24 @@ var po = [];
 
 var c = console.log;
 
-  po.push(c("       ----------------------------------------------------------"));
-  po.push(c("       -                                                        -"));
-  po.push(c("       |                        Order                           |"));
-  po.push(c("       ----------------------------------------------------------"));
-  po.push(c("       |                                                        |"));
-  po.push(c("       -                                                        -"));
-  po.push(c("       |     Item: (ItemName)                                   |"));
-  po.push(c("       -                                                        -"));
-  po.push(c("       |     Price: $ (Quantity *itemPrice)                     |"));
-  po.push(c("       -                                                        -"));
-  po.push(c("       |     Quantity:                                          |"));
-  po.push(c("       -                                                        -"));
-  po.push(c("       |     Total Cost:                                        |"));
-  po.push(c("       -                                                        -"));
-  po.push(c("       |                                                        |"));
-  po.push(c("       -                                                        -"));
-  po.push(c("       |                                                        |"));
-  po.push(c("       ----------------------------------------------------------"));
+  po.push(c("----------------------------------------------------------"));
+  po.push(c("-                                                        -"));
+  po.push(c("|                        Order                           |"));
+  po.push(c("----------------------------------------------------------"));
+  po.push(c("|                                                        |"));
+  po.push(c("-                                                        -"));
+  po.push(c("|     Item: (ItemName)                                   |"));
+  po.push(c("-                                                        -"));
+  po.push(c("|     Price: $ (Quantity *itemPrice)                     |"));
+  po.push(c("-                                                        -"));
+  po.push(c("|     Quantity:                                          |"));
+  po.push(c("-                                                        -"));
+  po.push(c("|     Total Cost:                                        |"));
+  po.push(c("-                                                        -"));
+  po.push(c("|                                                        |"));
+  po.push(c("-                                                        -"));
+  po.push(c("|                                                        |"));
+  po.push(c("----------------------------------------------------------"));
 
   outputOrder(po);
 
