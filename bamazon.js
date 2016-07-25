@@ -9,8 +9,8 @@ var res;
 var ai;
 var stock;
 var amount;
-var order[];
-var stockUpdate [];
+var order = [];
+var stockUpdate = [];
 
 //INITIALIZES THE CONNECTION VARIABLE TO SYNC WITH A MYSQL DATABASE//
 var connection = mysql.createConnection({
@@ -87,7 +87,6 @@ function choiceValidation(choice,res){
     }
   }
 
-
   if (valid =='true'){
     quantity(choice,res);
   }else{
@@ -103,10 +102,9 @@ function quantity(choice,res) {
   message:'How Many would you like?'
   }]).then(function(val) {
 
-
-    ai = choice - 1
+    ai = choice - 1;
     stock = res[ai].StockQuantity;
-    amount = val.amount
+    amount = val.amount;
 
       if (amount < stock){
         dbUpdate(choice, amount, stock);
@@ -123,13 +121,12 @@ function dbUpdate(choice, amount, stock){
 
   var update = 'UPDATE products SET StockQuantity = '+ newStock +' WHERE ItemID ='+ choice +';'
 
-
     connection.query(update, function(err, res) {
     if (err) throw err;
     console.log("----------------------------------------------------------");
     }); 
 
-     printOrder() 
+     
 
     connection.query('SELECT * FROM products', function(err, res) {
     if (err) throw err;
@@ -137,22 +134,31 @@ function dbUpdate(choice, amount, stock){
 
     console.table(res);
 
+    printOrder();
+
   });  
 } 
 
 
-
-
-
 function printOrder(){
 
-var printArray = []
+var po = [];
 
-var  pa = printArray.push
+var c = console.log;
 
-   pa(console.log("----------------------------------------------------------"))
+  po.push(c("----------------------------------------------------------"));
 
- 
 
-}
+  outputOrder(po);
+
+
+};
+
+function outputOrder(po) {
+    for (var o = 0; o < po.length; o++) {
+        //console.log(drawArray[o]);
+    }
+    }
+
+
 
