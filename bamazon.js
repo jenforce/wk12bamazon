@@ -11,6 +11,7 @@ var stock;
 var amount;
 var order = [];
 var stockUpdate = [];
+var q = [];
 
 //INITIALIZES THE CONNECTION VARIABLE TO SYNC WITH A MYSQL DATABASE//
 var connection = mysql.createConnection({
@@ -69,7 +70,7 @@ var promptCustomer = function(res) {
     inquirer.prompt([{
     type: 'input',
     name: 'choice',
-    message: 'What Item ID would you like to purchase?'
+    message: 'What Item ID would you like?'
   }]).then(function(val) {
 
       choice = val.choice
@@ -101,15 +102,20 @@ function quantity(choice,res) {
   name: 'amount',
   message:'How Many would you like?'
   }]).then(function(val) {
+  
 
     ai = choice - 1;
     stock = res[ai].StockQuantity;
     amount = val.amount;
 
+
+    console.log('q ='+q);
+    console.log('length'+q.length)
+
       if (amount < stock){
         dbUpdate(choice, amount, stock);
       }else{
-        console.log('That amount is not available we can do up to'+ ' '+ stock +'?')
+        console.log('That amount is not available order up to'+ ' '+ stock +'?')
       }          
   });                  
 };
@@ -134,10 +140,31 @@ function dbUpdate(choice, amount, stock){
 
     console.table(res);
 
-    printOrder();
+    calcOrder(choice,res);
 
   });  
 } 
+
+function calcOrder(choice,amount,res){
+//console.log(res[ai].Price);
+//console.log(choice);
+  //ai = choice - 1;
+
+
+  //var itemPrice = res[ai].Price;
+  //var orderItem = res[ai].ProductName;
+  //var orderQuantity = amount;
+  //console.log('amount'+amount);
+  //console.log('orderItem'+orderItem);
+  //console.log('orderQuantity'+orderQuantity);
+
+
+  //var total = 
+
+  printOrder();
+}
+
+
 
 
 function printOrder(){
@@ -146,8 +173,24 @@ var po = [];
 
 var c = console.log;
 
-  po.push(c("----------------------------------------------------------"));
-
+  po.push(c("       ----------------------------------------------------------"));
+  po.push(c("       -                                                        -"));
+  po.push(c("       |                        Order                           |"));
+  po.push(c("       ----------------------------------------------------------"));
+  po.push(c("       |                                                        |"));
+  po.push(c("       -                                                        -"));
+  po.push(c("       |     Item: (ItemName)                                   |"));
+  po.push(c("       -                                                        -"));
+  po.push(c("       |     Price: $ (Quantity *itemPrice)                     |"));
+  po.push(c("       -                                                        -"));
+  po.push(c("       |     Quantity:                                          |"));
+  po.push(c("       -                                                        -"));
+  po.push(c("       |     Total Cost:                                        |"));
+  po.push(c("       -                                                        -"));
+  po.push(c("       |                                                        |"));
+  po.push(c("       -                                                        -"));
+  po.push(c("       |                                                        |"));
+  po.push(c("       ----------------------------------------------------------"));
 
   outputOrder(po);
 
@@ -158,7 +201,7 @@ function outputOrder(po) {
     for (var o = 0; o < po.length; o++) {
         //console.log(drawArray[o]);
     }
-    }
+}
 
 
 
